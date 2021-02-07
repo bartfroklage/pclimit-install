@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"path/filepath"
     "os"
+    "os/user"
 	"syscall"
-	"strings"
-    "os/user" 
+	"strings"     
     "bufio"   
     "io/ioutil"
     "golang.org/x/sys/windows"
@@ -63,7 +63,7 @@ func main() {
     }
 
     fmt.Println("Configure registry.")
-    k, err := registry.OpenKey(registry.CURRENT_USER, `Software\Microsoft\Windows\CurrentVersion\Run`, registry.QUERY_VALUE)
+    k, err := registry.OpenKey(registry.CURRENT_USER, `Software\Microsoft\Windows\CurrentVersion\Run`, registry.QUERY_VALUE|registry.SET_VALUE)
     if err != nil {
         fmt.Println(err)
         waitForKey()
@@ -77,9 +77,7 @@ func main() {
         return
     }
 
-    
-
-    fmt.Println("Installed.")    
+    fmt.Println("Installed, pc-limit will be active after you restart.")    
     waitForKey()
 }
 
